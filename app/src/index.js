@@ -21,9 +21,18 @@ const App = {
       // get accounts
       const accounts = await web3.eth.getAccounts();
       this.account = accounts[0];
+      this.winningNumber();
     } catch (error) {
       console.error("Could not connect to contract or chain.");
     }
+  },
+
+  winningNumber: async function() {
+    const { winningNumber } = this.meta.methods;
+    const currentWinningNumber = await winningNumber().call();
+
+    const currentWinningNumberElement = document.getElementById("currentWinningNumber");
+    currentWinningNumberElement.innerHTML = currentWinningNumber;
   },
 
   sendNumber: async function() {
@@ -35,6 +44,8 @@ const App = {
     await sendNumber(amount).send({ from: this.account });
 
     this.setStatus("Transaction complete!");
+
+    this.winningNumber();
   },
 
   setStatus: function(message) {
