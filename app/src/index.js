@@ -35,6 +35,12 @@ const App = {
     currentWinningNumberElement.innerHTML = currentWinningNumber;
   },
 
+  reset: async function() {
+    const { reset } = this.meta.methods;
+    await reset().send({ from: this.account });
+    this.winningNumber();
+  },
+
   sendNumber: async function() {
     const amount = parseInt(document.getElementById("numberToSend").value);
 
